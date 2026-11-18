@@ -125,7 +125,7 @@ export class TarjetaTarea extends HTMLElement {
                     <input type="checkbox" id="checkEstado" ${this.tarea.completada ? "checked" : ""}>
                     <div class="info">
                         <h3 class="titulo">${this.tarea.titulo}</h3>
-                        <p class="fecha">${fechaMostrada}</p>
+                        <p class="fecha">[${this.tarea.fecha || "Sin fecha"} - ${fechaMostrada}]</p>
                     </div>
                 </div>
 
