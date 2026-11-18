@@ -1,3 +1,4 @@
+import { obtenerCategorias } from "../datos/almacenamiento.js";
 export class ModalFormulario extends HTMLElement {
     constructor() {
         super();
@@ -33,6 +34,10 @@ export class ModalFormulario extends HTMLElement {
         const valorTitulo = editando ? this.tareaEnEdicion.titulo : "";
         const valorFecha = editando ? this.tareaEnEdicion.fecha : fechaPorDefecto;
         const valorCompletada = editando ? this.tareaEnEdicion.completada : false;
+        const valorCategoria = editando ? this.tareaEnEdicion.categoria : "";
+        const opcionesHTML = obtenerCategorias().map(cat => 
+            `<option value="${cat}" ${cat === valorCategoria ? "selected" : ""}>${cat}</option>`
+        ).join("");
 
         this.shadowRoot.innerHTML = `
             <style>
