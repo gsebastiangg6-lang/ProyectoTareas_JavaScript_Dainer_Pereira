@@ -28,6 +28,7 @@ export function crearTareaLocal(datos) {
         titulo: datos.titulo,
         fecha: datos.fecha,
         completada: datos.completada,
+        categoria: datos.categoria || "Sin categoría", 
         origen: "local"
     };
 
@@ -47,6 +48,7 @@ export function actualizarTareaLocal(id, nuevosDatos) {
         tarea.titulo = nuevosDatos.titulo;
         tarea.fecha = nuevosDatos.fecha;
         tarea.completada = nuevosDatos.completada;
+        tarea.categoria = nuevosDatos.categoria || "Sin categoría";
         guardarTareas(lista);
     }
 }
@@ -67,7 +69,7 @@ export function eliminarTareaPorId(id) {
     guardarTareas(filtradas);
 }
 
-export function agregarTareasSeleccionadasAPI(tareasSeleccionadas) {
+export function agregarTareasSeleccionadasAPI(tareasSeleccionadas, categoria) {
     const listaActual = obtenerTareas();
     const fechaHoy = new Date().toISOString().split("T")[0];
 
@@ -77,6 +79,7 @@ export function agregarTareasSeleccionadasAPI(tareasSeleccionadas) {
             titulo: itemApi.title,
             fecha: fechaHoy,
             completada: Boolean(itemApi.completed),
+            categoria: categoria || "Sin categoría",
             origen: "api"
         };
         listaActual.unshift(nuevaImportada);
