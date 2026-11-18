@@ -151,3 +151,51 @@ botonesFiltro.forEach(boton => {
 cargarTareasInicialesSiEstaVacio();
 renderizarInterfaz();
 
+const btnCategorias = document.getElementById("btnCategorias");
+
+btnCategorias.addEventListener("click", () => {
+    const cats = obtenerCategorias();
+    const menu = prompt(
+        `CATEGORÍAS ACTUALES:\n- ${cats.join("\n- ")}\n\n` +
+        `Escribe:\n1 para CREAR categoría\n2 para ACTUALIZAR categoría\n3 para ELIMINAR categoría`
+    );
+
+    if (menu === "1") {
+        const nueva = prompt("Nombre de la nueva categoría:");
+        if (nueva && nueva.trim() !== "") {
+            cats.push(nueva.trim());
+            guardarCategorias(cats);
+            alert("Categoría creada.");
+        }
+    } else if (menu === "2") {
+        const actual = prompt("Escribe el nombre exacto de la categoría a editar:");
+        const indice = cats.indexOf(actual);
+        if (indice !== -1) {
+            const nuevoNombre = prompt("Nuevo nombre para la categoría:");
+            if (nuevoNombre && nuevoNombre.trim() !== "") {
+                cats[indice] = nuevoNombre.trim();
+                guardarCategorias(cats);
+                // Actualizar también en las tareas existentes
+                const tareas = obtenerTareas();
+                tareas.forEach(t => {
+                    if (t.categoria === actual) t.categoria = nuevoNombre.trim();
+                });
+                guardarTareas(tareas);
+                renderizarInterfaz();
+                alert("Categoría actualizada.");
+            }
+        } else {
+            alert("Categoría no encontrada.");
+        }
+    } else if (menu === "3") {
+        const borrar = prompt("Escribe el nombre exacto de la categoría a eliminar:");
+        const nuevasCats = cats.filter(c => c !== borrar);
+        if (nuevasCats.length !== cats.length) {
+            guardarCategorias(nuevasCats);
+            alert("Categoría eliminada.");
+        } else {
+            alert("Categoría no encontrada.");
+        }
+    }
+});
+
