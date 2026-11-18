@@ -8,8 +8,6 @@ import {
     agregarTareasSeleccionadasAPI,
     marcarTodasComoTerminadas,
     vaciarTodaLaLista,
-    marcarTodasComoTerminadas,
-    vaciarTodaLaLista,
     obtenerCategorias,
     guardarCategorias
 } from "./datos/almacenamiento.js";
