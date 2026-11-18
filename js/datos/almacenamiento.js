@@ -1,5 +1,13 @@
 const CLAVE_STORAGE = "task_manager_datos";
 
+export function obtenerCategorias() {
+    return JSON.parse(localStorage.getItem("categorias_datos")) || ["Trabajo", "Estudio", "Personal"];
+}
+
+export function guardarCategorias(lista) {
+    localStorage.setItem("categorias_datos", JSON.stringify(lista));
+}   
+
 export function obtenerTareas() {
     const datosTexto = localStorage.getItem(CLAVE_STORAGE);
     if (datosTexto) {
