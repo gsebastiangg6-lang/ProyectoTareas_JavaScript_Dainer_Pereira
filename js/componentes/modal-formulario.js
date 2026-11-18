@@ -90,7 +90,8 @@ export class ModalFormulario extends HTMLElement {
                     color: #475569;
                 }
                 input[type="text"],
-                input[type="date"] {
+                input[type="date"] 
+                select {
                     padding: 10px 12px;
                     border: 1px solid #cbd5e1;
                     border-radius: 8px;
@@ -151,7 +152,12 @@ export class ModalFormulario extends HTMLElement {
                                 <label for="inputTitulo">Título / Descripción de la tarea</label>
                                 <input type="text" id="inputTitulo" required value="${valorTitulo}" placeholder="Ej. Preparar entrega de proyecto...">
                             </div>
-
+                            <div class="campo">
+                                <label for="inputCategoria">Categoría</label>
+                                <select id="inputCategoria">
+                                    ${opcionesHTML}
+                                </select>
+                            </div>
                             <div class="campo">
                                 <label for="inputFecha">Fecha de registro</label>
                                 <input type="date" id="inputFecha" required value="${valorFecha}">
@@ -182,9 +188,12 @@ export class ModalFormulario extends HTMLElement {
             const titulo = this.shadowRoot.getElementById("inputTitulo").value.trim();
             const fecha = this.shadowRoot.getElementById("inputFecha").value;
             const completada = this.shadowRoot.getElementById("checkCompletada").checked;
+            const categoria = this.shadowRoot.getElementById("inputCategoria").value;
 
             this.dispatchEvent(new CustomEvent("guardar-formulario", {
                 detail: {
+                    completada: completada,
+                    categoria: categoria,
                     id: editando ? this.tareaEnEdicion.id : null,
                     titulo: titulo,
                     fecha: fecha,
