@@ -1,3 +1,4 @@
+import { obtenerCategorias } from "../datos/almacenamiento.js";
 export class ModalImportar extends HTMLElement {
     constructor() {
         super();
@@ -36,6 +37,9 @@ export class ModalImportar extends HTMLElement {
         if (filasHTML === "") {
             filasHTML = `<p style="padding: 12px; color: #64748b;">Cargando tareas de la API...</p>`;
         }
+            const opcionesHTML = obtenerCategorias().map(cat =>
+                `<option value="${cat}">${cat}</option>`
+            ).join("");
 
         this.shadowRoot.innerHTML = `
             <style>
@@ -135,6 +139,13 @@ export class ModalImportar extends HTMLElement {
                     <h2>Importar Tareas (API)</h2>
                     <p class="endpoint-text">Endpoint: https://jsonplaceholder.typicode.com/todos</p>
 
+                <div style="margin-bottom: 12px;">
+                    <label style="font-size: 0.85rem; font-weight: 600;">Categoría destino:</label>
+                    <select id="selectCatApi" style="width: 100%; padding: 8px; margin-top: 4px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                        ${opcionesHTML}
+                    </select>
+                </div>
+
                     <div class="list-box">
                         ${filasHTML}
                     </div>
@@ -164,8 +175,13 @@ export class ModalImportar extends HTMLElement {
                 }
             });
 
+            const categoriaElegida = this.shadowRoot.getElementById("selectCatApi").value;
+
             this.dispatchEvent(new CustomEvent("confirmar-importacion", {
-                detail: { tareas: tareasElegidas },
+                detail: { 
+                    tareas: tareasElegidas, 
+                    categoria: categoriaElegida 
+                },
                 bubbles: true,
                 composed: true
             }));
